@@ -9,6 +9,13 @@ namespace RDF;
 
 require_once('contrib/jsonld.php');
 
+/**
+ * 
+ * Function which converts a reletive $url into a absolute URL starting at $base
+ * @param String $base
+ * @param String $url
+ * @return String containing the absolute URL
+ */
 function absolutize($base, $url) {
     if (!$url)
         return $base;
@@ -22,6 +29,7 @@ function absolutize($base, $url) {
     $path = preg_replace('~/\./~', '/', $path);
     $parts = array();
     foreach (explode('/', preg_replace('~/+~', '/', $path)) as $part)
+        // TODO: What happens if $path starts with ".."?
         if ($part === '..') {
             array_pop($parts);
         } elseif ($part != '') {
